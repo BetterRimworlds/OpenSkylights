@@ -11,6 +11,7 @@
 
 using RimWorld;
 using Verse;
+using Verse.Sound;
 
 namespace BetterRimworlds.OpenSkylights;
 
@@ -36,5 +37,61 @@ public class Building_Skylight : Building
         Map current = Map;
         base.DeSpawn(mode);
         current?.GetComponent<MapComp_Skylights>()?.Deregister(this);
+    }
+
+    public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
+    {
+        IntVec3 pos = Position;
+        Map current = Map;
+        bool spawned = Spawned;
+        base.Destroy(mode);
+        if (spawned && Smashed(mode) && current != null)
+            PlaySmashed(pos, current);
+    }
+
+    public override void TickRare()
+    {
+        base.TickRare();
+        if (!Spawned || OpenSkylights.Settings == null || !OpenSkylights.Settings.sunlightHeatsRoom)
+            return;
+
+        float glow = Map.skyManager.CurSkyGlow;
+        if (glow <= 0.01f)
+            return;
+
+        if (Map.mapTemperature.OutdoorTemp >= MapComp_Skylights.HotOutdoors)
+            return;
+
+        int cells = def.size.x * def.size.z;
+        GenTemperature.PushHeat(Position, Map, MapComp_Skylights.HeatPerFootprintCell * cells * glow);
+    }
+
+    public override void Print(SectionLayer layer)
+    {
+        if (OpenSkylights.Settings != null && OpenSkylights.Settings.hideWindows)
+            return;
+
+        base.Print(layer);
+    }
+
+    static bool Smashed(DestroyMode mode)
+    {
+        if (mode == DestroyMode.KillFinalize)
+            return true;
+
+#if !RIMWORLD12 && !RIMWORLD13
+        if (mode == DestroyMode.KillFinalizeLeavingsOnly)
+            return true;
+#endif
+        return false;
+    }
+
+    static void PlaySmashed(IntVec3 pos, Map map)
+    {
+        SoundDef sound = DefDatabase<SoundDef>.GetNamed("SmashedSkylight", false);
+        if (sound == null)
+            return;
+
+        sound.PlayOneShot(SoundInfo.InMap(new TargetInfo(pos, map), MaintenanceType.None));
     }
 }
