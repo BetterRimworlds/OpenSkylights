@@ -16,4 +16,25 @@ namespace BetterRimworlds.OpenSkylights;
 
 public class Building_Skylight : Building
 {
+    public static bool IsSkylight(Thing thing)
+    {
+        if (thing is Building_Skylight)
+            return true;
+
+        return thing?.def?.entityDefToBuild is ThingDef built
+            && built.thingClass == typeof(Building_Skylight);
+    }
+
+    public override void SpawnSetup(Map map, bool respawningAfterLoad)
+    {
+        base.SpawnSetup(map, respawningAfterLoad);
+        map.GetComponent<MapComp_Skylights>()?.Register(this);
+    }
+
+    public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
+    {
+        Map current = Map;
+        base.DeSpawn(mode);
+        current?.GetComponent<MapComp_Skylights>()?.Deregister(this);
+    }
 }
