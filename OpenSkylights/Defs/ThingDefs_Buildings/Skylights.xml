@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<ThingDef Name="BasedSkyLight" Abstract="True">
+		<label>skylight</label>
+		<description>Lets in daylight through a window in the roof.</description>
+		<thingClass>BetterRimworlds.OpenSkylights.Building_Skylight</thingClass>
+		<blockLight>false</blockLight>
+		<holdsRoof>false</holdsRoof>
+		<graphicData>
+			<texPath>Things/Building/skylight</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>Transparent</shaderType>
+			<drawSize>(1,1)</drawSize>
+		</graphicData>
+		<category>Building</category>
+		<soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
+		<drawerType>MapMeshAndRealTime</drawerType>
+		<repairEffect>Repair</repairEffect>
+		<filthLeaving>Filth_RubbleBuilding</filthLeaving>
+		<tickerType>Rare</tickerType>
+		<fillPercent>0</fillPercent>
+		<altitudeLayer>Weather</altitudeLayer>
+		<passability>Standable</passability>
+		<selectable>false</selectable>
+		<leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+		<rotatable>true</rotatable>
+		<statBases>
+			<MaxHitPoints>80</MaxHitPoints>
+			<WorkToBuild>135</WorkToBuild>
+			<Flammability>0</Flammability>
+			<Beauty>5</Beauty>
+		</statBases>
+		<placeWorkers>
+			<li>BetterRimworlds.OpenSkylights.PlaceWorker_Skylight</li>
+		</placeWorkers>
+		<building>
+			<blueprintGraphicData>
+				<texPath>Things/Building/skylightBP</texPath>
+			</blueprintGraphicData>
+			<isInert>true</isInert>
+			<isEdifice>false</isEdifice>
+			<canBuildNonEdificesUnder>true</canBuildNonEdificesUnder>
+		</building>
+		<clearBuildingArea>false</clearBuildingArea>
+		<designationCategory>skylights</designationCategory>
+	</ThingDef>
+
+	<ThingDef ParentName="BasedSkyLight">
+		<defName>SkyLightA</defName>
+		<label>skylight</label>
+		<graphicData>
+			<drawSize>(1,1)</drawSize>
+			<texPath>Things/Building/skylight</texPath>
+		</graphicData>
+		<costList>
+			<GlassPane>1</GlassPane>
+		</costList>
+	</ThingDef>
+
+	<ThingDef ParentName="BasedSkyLight">
+		<defName>SkyLightD</defName>
+		<label>skylight 2x2</label>
+		<graphicData>
+			<drawSize>(2,2)</drawSize>
+			<texPath>Things/Building/skylight3x3</texPath>
+		</graphicData>
+		<size>(2,2)</size>
+		<costList>
+			<GlassPane>2</GlassPane>
+		</costList>
+	</ThingDef>
+
+	<ThingDef ParentName="BasedSkyLight">
+		<defName>SkyLightB</defName>
+		<label>skylight 3x3</label>
+		<graphicData>
+			<drawSize>(3,3)</drawSize>
+			<texPath>Things/Building/skylight3x3</texPath>
+		</graphicData>
+		<size>(3,3)</size>
+		<costList>
+			<GlassPane>3</GlassPane>
+		</costList>
+	</ThingDef>
+
+	<ThingDef ParentName="BasedSkyLight">
+		<defName>SkyLightC</defName>
+		<label>skylight 1x4</label>
+		<graphicData>
+			<drawSize>(1,4)</drawSize>
+			<texPath>Things/Building/skylight1x4</texPath>
+		</graphicData>
+		<size>(1,4)</size>
+		<rotatable>true</rotatable>
+		<costList>
+			<GlassPane>2</GlassPane>
+		</costList>
+	</ThingDef>
+
+</Defs>

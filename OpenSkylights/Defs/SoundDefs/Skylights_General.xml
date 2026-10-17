@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<SoundDef>
+		<defName>SmashedSkylight</defName>
+		<maxSimultaneous>3</maxSimultaneous>
+		<context>MapOnly</context>
+		<subSounds>
+			<li>
+				<grains>
+					<li Class="AudioGrain_Folder">
+						<clipFolderPath>SkylightsMisc</clipFolderPath>
+					</li>
+				</grains>
+				<volumeRange>20~20</volumeRange>
+				<pitchRange>0.96~1.18</pitchRange>
+			</li>
+		</subSounds>
+	</SoundDef>
+
+</Defs>

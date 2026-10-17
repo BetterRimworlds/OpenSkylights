@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<RoomRoleDef>
+		<defName>IndoorGarden</defName>
+		<label>indoor garden</label>
+		<workerClass>BetterRimworlds.OpenSkylights.RoomRoleWorker_IndoorGarden</workerClass>
+		<relatedStats>
+			<li>Beauty</li>
+			<li>Cleanliness</li>
+			<li>Wealth</li>
+			<li>Space</li>
+			<li>Impressiveness</li>
+		</relatedStats>
+	</RoomRoleDef>
+
+	<JoyGiverDef>
+		<defName>SkygazeIndoors</defName>
+		<giverClass>BetterRimworlds.OpenSkylights.JoyGiver_SkygazeIndoors</giverClass>
+		<baseChance>1</baseChance>
+		<jobDef>SkygazeIndoors</jobDef>
+		<joyKind>Meditative</joyKind>
+		<requiredCapacities>
+			<li>Sight</li>
+		</requiredCapacities>
+	</JoyGiverDef>
+
+	<JobDef>
+		<defName>SkygazeIndoors</defName>
+		<driverClass>BetterRimworlds.OpenSkylights.JobDriver_SkygazeIndoors</driverClass>
+		<reportString>skygazing.</reportString>
+		<joyDuration>4000</joyDuration>
+		<joyKind>Meditative</joyKind>
+	</JobDef>
+
+	<JoyGiverDef>
+		<defName>GoForWalkIndoors</defName>
+		<giverClass>BetterRimworlds.OpenSkylights.JoyGiver_GoForWalkIndoors</giverClass>
+		<baseChance>1</baseChance>
+		<jobDef>GoForWalkIndoors</jobDef>
+		<joyKind>Meditative</joyKind>
+	</JoyGiverDef>
+
+	<JobDef>
+		<defName>GoForWalkIndoors</defName>
+		<driverClass>BetterRimworlds.OpenSkylights.JobDriver_GoForWalkIndoors</driverClass>
+		<reportString>going for a walk.</reportString>
+		<joyDuration>8000</joyDuration>
+		<joyKind>Meditative</joyKind>
+	</JobDef>
+
+</Defs>

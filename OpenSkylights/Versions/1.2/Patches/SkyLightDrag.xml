@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+	<!-- placingDraggableDimensions is how 1.2–1.5 drag a 1x1 in a line. 1.6+ uses drawStyleCategory. -->
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="SkyLightA"]</xpath>
+		<value>
+			<placingDraggableDimensions>1</placingDraggableDimensions>
+		</value>
+	</Operation>
+
+</Patch>

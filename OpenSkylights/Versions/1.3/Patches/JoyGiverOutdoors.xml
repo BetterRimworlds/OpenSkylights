@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+	<!-- requiresEnjoyOutdoors exists from 1.3 onward. -->
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/JoyGiverDef[defName="SkygazeIndoors"]</xpath>
+		<value>
+			<requiresEnjoyOutdoors>true</requiresEnjoyOutdoors>
+		</value>
+	</Operation>
+
+</Patch>

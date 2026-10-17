@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+	<NotUnderConstructedRoof>Must be placed on constructed roof</NotUnderConstructedRoof>
+	<RemoveSkylights>Remove Skylights</RemoveSkylights>
+	<DeconstructLights>Designate skylights for deconstruction</DeconstructLights>
+	<MustBeSkylight>Must be a skylight</MustBeSkylight>
+	<NotWithinRoomBounds>Not within room bounds</NotWithinRoomBounds>
+	<hideWindows>Hide windows</hideWindows>
+	<hideWindowsTip>Hide the frame of skylights. Remember that they are there.</hideWindowsTip>
+	<SunlightHeatsRoom>Sunlight heats rooms</SunlightHeatsRoom>
+	<SunlightHeatsRoomTip>Skylights emit heat while the sun is shining.</SunlightHeatsRoomTip>
+
+</LanguageData>
