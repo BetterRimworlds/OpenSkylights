@@ -26,6 +26,15 @@ public class Building_Skylight : Building
             && built.thingClass == typeof(Building_Skylight);
     }
 
+    public override void ExposeData()
+    {
+        base.ExposeData();
+
+        // Dubs' Building_skyLight wrote its own fields into the same node.
+        // They are not part of our save contract, and RimWorld ignores unknown
+        // child nodes. Only the base Thing state and the def name carry over.
+    }
+
     public override void SpawnSetup(Map map, bool respawningAfterLoad)
     {
         base.SpawnSetup(map, respawningAfterLoad);

@@ -56,6 +56,15 @@ public class MapComp_Skylights : MapComponent
         return (uint)index < (uint)lit.Length && lit[index];
     }
 
+    public override void ExposeData()
+    {
+        base.ExposeData();
+
+        // The old Dubs_Skylight.MapComp_Skylights node has no matching class
+        // and is dropped by the loader. The grid is rebuilt from spawned
+        // skylights in FinalizeInit, which runs after Map.FinalizeLoading.
+    }
+
     public override void FinalizeInit()
     {
         Rebuild();
