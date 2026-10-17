@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>10</LangVersion>
+
+    <ProjectGuid>{4F145FBB-C312-4AE1-9F19-E13ACA73A771}</ProjectGuid>
+    <RootNamespace>BetterRimworlds.OpenSkylights</RootNamespace>
+    <AssemblyName>OpenSkylights</AssemblyName>
+
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+
+    <!-- Preserve your existing output root. -->
+    <ModOutputRoot>/rimworld/1.2/Mods/OpenSkylights</ModOutputRoot>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release v1.2' ">
+    <RimWorldVersion>1.2</RimWorldVersion>
+    <RimWorldInstall>/rimworld/1.2</RimWorldInstall>
+    <DefineConstants>RIMWORLD12</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release v1.3' ">
+    <RimWorldVersion>1.3</RimWorldVersion>
+    <RimWorldInstall>/rimworld/1.3</RimWorldInstall>
+    <DefineConstants>RIMWORLD13</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release v1.4' ">
+    <RimWorldVersion>1.4</RimWorldVersion>
+    <RimWorldInstall>/rimworld/1.4</RimWorldInstall>
+    <DefineConstants>RIMWORLD14</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release v1.5' ">
+    <RimWorldVersion>1.5</RimWorldVersion>
+    <RimWorldInstall>/rimworld/1.5</RimWorldInstall>
+    <DefineConstants>RIMWORLD15</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release v1.6' ">
+    <RimWorldVersion>1.6</RimWorldVersion>
+    <RimWorldInstall>/rimworld/1.6</RimWorldInstall>
+    <RimWorldInstall Condition="Exists('/rimworld/1.6-steam/RimWorldLinux_Data/Managed/Assembly-CSharp.dll')">/rimworld/1.6-steam</RimWorldInstall>
+    <DefineConstants>RIMWORLD16</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release v1.7' ">
+    <RimWorldVersion>1.7</RimWorldVersion>
+    <RimWorldInstall>/rimworld/1.7-steam</RimWorldInstall>
+    <TargetFramework>net10.0</TargetFramework>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <DefineConstants>RIMWORLD17</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RimWorldVersion)' != '' ">
+    <OutputPath>$(ModOutputRoot)/$(RimWorldVersion)/Assemblies</OutputPath>
+  </PropertyGroup>
+
+  <Target Name="FailOnUnsupportedConfiguration" BeforeTargets="BeforeBuild" Condition=" '$(RimWorldVersion)' == '' ">
+    <Error Text="Unsupported configuration '$(Configuration)'. Use one of: $(Configurations)" />
+  </Target>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(RimWorldVersion)' != '' and '$(RimWorldVersion)' != '1.7' ">
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(RimWorldInstall)/RimWorldLinux_Data/Managed/Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="UnityEngine">
+      <HintPath>$(RimWorldInstall)/RimWorldLinux_Data/Managed/UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(RimWorldInstall)/RimWorldLinux_Data/Managed/UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(RimWorldInstall)/RimWorldLinux_Data/Managed/UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(RimWorldInstall)/RimWorldLinux_Data/Managed/UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="0Harmony">
+      <HintPath>$(RimWorldInstall)/Mods/Harmony/Current/Assemblies/0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(RimWorldVersion)' == '1.7' ">
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(RimWorldInstall)/Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="UnityStubs">
+      <HintPath>$(RimWorldInstall)/UnityStubs.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+
+    <Reference Include="0Harmony">
+      <HintPath>$(RimWorldInstall)/Mods/Harmony/Current/Assemblies/0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
