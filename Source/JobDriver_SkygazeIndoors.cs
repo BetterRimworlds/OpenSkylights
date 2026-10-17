@@ -10,6 +10,8 @@
  */
 
 using System.Collections.Generic;
+using RimWorld;
+using Verse;
 using Verse.AI;
 
 namespace BetterRimworlds.OpenSkylights;
@@ -23,6 +25,25 @@ public class JobDriver_SkygazeIndoors : JobDriver
 
     protected override IEnumerable<Toil> MakeNewToils()
     {
-        yield break;
+        this.FailOn(() => IndoorGardenUtility.IsRaining(pawn.Map));
+        yield return Toils_Goto.GotoCell(TargetIndex.A, PathEndMode.OnCell);
+
+        Toil toil = new Toil();
+        toil.initAction = () =>
+        {
+            pawn.jobs.posture = PawnPosture.LayingOnGroundFaceUp;
+        };
+        toil.tickAction = () =>
+        {
+#if RIMWORLD16 || RIMWORLD17
+            JoyUtility.JoyTickCheckEnd(pawn, 1, JoyTickFullJoyAction.EndJob);
+#else
+            JoyUtility.JoyTickCheckEnd(pawn, JoyTickFullJoyAction.EndJob);
+#endif
+        };
+        toil.defaultCompleteMode = ToilCompleteMode.Delay;
+        toil.defaultDuration = job.def.joyDuration;
+        toil.FailOn(() => !IndoorGardenUtility.IsInGarden(pawn));
+        yield return toil;
     }
 }

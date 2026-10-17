@@ -10,6 +10,8 @@
  */
 
 using System.Collections.Generic;
+using RimWorld;
+using Verse;
 using Verse.AI;
 
 namespace BetterRimworlds.OpenSkylights;
@@ -23,6 +25,38 @@ public class JobDriver_GoForWalkIndoors : JobDriver
 
     protected override IEnumerable<Toil> MakeNewToils()
     {
-        yield break;
+        this.FailOn(() => IndoorGardenUtility.IsRaining(pawn.Map));
+        this.FailOn(() => !IndoorGardenUtility.IsInGarden(pawn));
+
+        Toil goToil = Toils_Goto.GotoCell(TargetIndex.A, PathEndMode.OnCell);
+        goToil.tickAction = () =>
+        {
+            if (Find.TickManager.TicksGame > startTick + job.def.joyDuration)
+            {
+                EndJobWith(JobCondition.Succeeded);
+                return;
+            }
+
+#if RIMWORLD16 || RIMWORLD17
+            JoyUtility.JoyTickCheckEnd(pawn, 1);
+#else
+            JoyUtility.JoyTickCheckEnd(pawn);
+#endif
+        };
+
+        yield return goToil;
+
+        Toil next = new Toil();
+        next.initAction = () =>
+        {
+            if (job.targetQueueA.Count > 0)
+            {
+                LocalTargetInfo target = job.targetQueueA[0];
+                job.targetQueueA.RemoveAt(0);
+                job.targetA = target;
+                JumpToToil(goToil);
+            }
+        };
+        yield return next;
     }
 }

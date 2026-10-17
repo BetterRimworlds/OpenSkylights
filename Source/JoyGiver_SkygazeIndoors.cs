@@ -19,6 +19,22 @@ public class JoyGiver_SkygazeIndoors : JoyGiver
 {
     public override Job TryGiveJob(Pawn pawn)
     {
-        return null;
+        if (pawn == null || !pawn.Spawned)
+            return null;
+
+        Room room = pawn.GetRoom();
+        if (!IndoorGardenUtility.IsIndoorGarden(room))
+            return null;
+
+        if (IndoorGardenUtility.IsRaining(pawn.Map))
+            return null;
+
+        if (!IndoorGardenUtility.IsComfortable(pawn, room))
+            return null;
+
+        if (!IndoorGardenUtility.TryFindStandableCell(pawn, room, out IntVec3 cell))
+            return null;
+
+        return JobMaker.MakeJob(def.jobDef, cell);
     }
 }
