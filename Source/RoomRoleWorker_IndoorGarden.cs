@@ -17,6 +17,8 @@ public class RoomRoleWorker_IndoorGarden : RoomRoleWorker
 {
     public override float GetScore(Room room)
     {
-        return 0f;
+        return IndoorGardenUtility.MeetsBars(room, out int beautyPlants)
+            ? beautyPlants
+            : 0f;
     }
 }
