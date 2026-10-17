@@ -1,7 +1,9 @@
 # OpenSkylights
 
-Part of the [Better Rimworlds](https://github.com/BetterRimworlds) collection — Stargate-inspired
-tech for multi-century hub-world colonies.
+This is a clean-room, save-compatible, 100% open sourced replacement for Dubs Skylights.
+
+Part of the [Better Rimworlds](https://github.com/BetterRimworlds) collection — Glitterworld tech 
+for multi-century hub-world colonies.
 
 ## Supported RimWorld Versions
 
@@ -15,3 +17,4 @@ tech for multi-century hub-world colonies.
 ## Changelog
 
 For more, see [CHANGELOG.md](CHANGELOG.md).
+

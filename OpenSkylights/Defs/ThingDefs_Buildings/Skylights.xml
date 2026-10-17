@@ -63,7 +63,7 @@
 		<label>skylight 2x2</label>
 		<graphicData>
 			<drawSize>(2,2)</drawSize>
-			<texPath>Things/Building/skylight3x3</texPath>
+			<texPath>Things/Building/skylight2x2</texPath>
 		</graphicData>
 		<size>(2,2)</size>
 		<costList>

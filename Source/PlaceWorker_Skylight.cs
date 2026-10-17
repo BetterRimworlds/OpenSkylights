@@ -9,13 +9,34 @@
  * This file is licensed under the MIT License.
  */
 
+using System.Collections.Generic;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace BetterRimworlds.OpenSkylights;
 
 public class PlaceWorker_Skylight : PlaceWorker
 {
+    static readonly Color LightOutline = new Color(1f, 0.92f, 0.55f);
+
+    public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol, Thing thing = null)
+    {
+        Map map = Find.CurrentMap;
+        if (map == null || def == null)
+            return;
+
+        List<IntVec3> cells = new List<IntVec3>();
+        foreach (IntVec3 cell in MapComp_Skylights.LightRect(center, rot, def.size))
+        {
+            if (cell.InBounds(map))
+                cells.Add(cell);
+        }
+
+        if (cells.Count > 0)
+            GenDraw.DrawFieldEdges(cells, LightOutline);
+    }
+
     public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null, Thing thing = null)
     {
         ThingDef thingDef = checkingDef as ThingDef;

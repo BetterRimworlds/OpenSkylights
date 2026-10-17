@@ -29,9 +29,16 @@ public class MapComp_Skylights : MapComponent
 
     readonly bool[] lit;
 
+    // One cell past the lit ring. The lighting overlay darkens a corner when
+    // any cell touching it is roofed, which otherwise leaves a shadow inside
+    // the lit ring. Gameplay light still stops at lit.
+    readonly bool[] openToSky;
+
     public MapComp_Skylights(Map map) : base(map)
     {
-        lit = new bool[map.cellIndices.NumGridCells];
+        int cells = map.cellIndices.NumGridCells;
+        lit = new bool[cells];
+        openToSky = new bool[cells];
     }
 
     public static bool Lit(Map map, IntVec3 cell)
@@ -54,6 +61,17 @@ public class MapComp_Skylights : MapComponent
     public bool IsLit(int index)
     {
         return (uint)index < (uint)lit.Length && lit[index];
+    }
+
+    public bool IsOpenToSky(int index)
+    {
+        return (uint)index < (uint)openToSky.Length && openToSky[index];
+    }
+
+    // Footprint plus the one-cell ring that MarkFootprint records as lit.
+    public static CellRect LightRect(IntVec3 loc, Rot4 rot, IntVec2 size)
+    {
+        return GenAdj.OccupiedRect(loc, rot, size).ExpandedBy(1);
     }
 
     public override void ExposeData()
@@ -128,22 +146,23 @@ public class MapComp_Skylights : MapComponent
     {
         for (int i = 0; i < lit.Length; i++)
         {
-            if (!lit[i])
+            if (!lit[i] && !openToSky[i])
                 continue;
 
             lit[i] = false;
+            openToSky[i] = false;
             DirtyGlow(map.cellIndices.IndexToCell(i));
         }
     }
 
     void MarkFootprint(Building_Skylight skylight)
     {
-        foreach (IntVec3 cell in skylight.OccupiedRect())
-        {
+        CellRect light = LightRect(skylight.Position, skylight.Rotation, skylight.def.size);
+        foreach (IntVec3 cell in light)
             MarkCell(cell);
-            for (int i = 0; i < 8; i++)
-                MarkCell(cell + GenAdj.AdjacentCells[i]);
-        }
+
+        foreach (IntVec3 cell in light.ExpandedBy(1))
+            MarkOpen(cell);
     }
 
     void MarkCell(IntVec3 cell)
@@ -152,10 +171,24 @@ public class MapComp_Skylights : MapComponent
             return;
 
         int index = map.cellIndices.CellToIndex(cell);
+        openToSky[index] = true;
         if (lit[index])
             return;
 
         lit[index] = true;
+        DirtyGlow(cell);
+    }
+
+    void MarkOpen(IntVec3 cell)
+    {
+        if (!cell.InBounds(map))
+            return;
+
+        int index = map.cellIndices.CellToIndex(cell);
+        if (openToSky[index])
+            return;
+
+        openToSky[index] = true;
         DirtyGlow(cell);
     }
 

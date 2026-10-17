@@ -17,8 +17,10 @@ using Verse;
 
 namespace BetterRimworlds.OpenSkylights;
 
-// The lighting overlay darkens every constructed-roof cell. Lit skylight cells
-// stay open to the sky in that overlay only. Other roof queries are unchanged.
+// The lighting overlay darkens every constructed-roof cell, and it darkens a
+// corner when any cell touching that corner is roofed. Lit cells and the one
+// cell past them stay open here, so that fringe falls outside the lit ring.
+// Other roof queries are unchanged.
 [HarmonyPatch]
 public static class Patch_DaylightOverlay
 {
@@ -82,6 +84,6 @@ public static class Patch_DaylightOverlay
     static bool Lit(RoofGrid grid, int index)
     {
         Map map = MapOf(grid);
-        return map != null && map.GetComponent<MapComp_Skylights>()?.IsLit(index) == true;
+        return map != null && map.GetComponent<MapComp_Skylights>()?.IsOpenToSky(index) == true;
     }
 }
